@@ -15,7 +15,7 @@ export default function Portfolio() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ["home", "about", "experience", "projects", "skills", "contact"]
+      const sections = ["home", "about", "experience", "projects", "skills", "certifications", "contact"]
       const scrollPosition = window.scrollY + 100
 
       for (const section of sections) {
@@ -226,6 +226,44 @@ export default function Portfolio() {
     },
   ]
 
+  const certifications = [
+    {
+      title: "AWS Cloud Practitioner",
+      image: "/images/aws.jpg",
+      link: "https://drive.google.com/file/d/1yi_EVLz2cuSnS48Nu7LbzZcaAxKNWNUV/view",
+    },
+    {
+      title: "React by Meta",
+      image: "/images/rect.jpg",
+      link: "https://drive.google.com/file/d/1jfKEW61Pemth5VTt9LWaj3W3w8juAAoF/view?usp=drivesdk",
+    },
+    {
+      title: "C++ By Cisco",
+      image: "/images/cpp.jpg",
+      link: "https://drive.google.com/file/d/1pbgYX4zpZHQ760FUBatqQ9w448GDIIZh/view?usp=drivesdk",
+    },
+    {
+      title: "Python",
+      image: "/images/python.jpg",
+      link: "https://drive.google.com/file/d/1_JJrjb7C51uP7JX4Cr52HAIC7MTPyXlf/view?usp=drivesdk",
+    },
+    {
+      title: "Java Full Stack By Wipro",
+      image: "/images/java full stack.jpg",
+      link: "https://drive.google.com/file/d/1VrLpNp12XYPEU6PVGW6PkLPNYuLtTZGW/view",
+    },
+  ]
+
+  const navItems = [
+    { label: "Home", id: "home" },
+    { label: "About", id: "about" },
+    { label: "Experience", id: "experience" },
+    { label: "Projects", id: "projects" },
+    { label: "Skills", id: "skills" },
+    { label: "Certificates", id: "certifications" }, // <-- Correct mapping!
+    { label: "Contact", id: "contact" },
+  ]
+
   return (
     <div className="min-h-screen bg-black text-white relative overflow-hidden">
       {/* Electromagnetic Wave Background */}
@@ -240,18 +278,18 @@ export default function Portfolio() {
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex space-x-8">
-              {["Home", "About", "Experience", "Projects", "Skills", "Contact"].map((item) => (
+              {navItems.map((item) => (
                 <button
-                  key={item}
-                  onClick={() => scrollToSection(item.toLowerCase())}
+                  key={item.label}
+                  onClick={() => scrollToSection(item.id)}
                   className={`text-sm font-medium font-code tracking-wide transition-all duration-300 relative uppercase ${
-                    activeSection === item.toLowerCase()
+                    activeSection === item.id
                       ? "text-white text-glow"
                       : "text-gray-400 hover:text-white hover:text-glow"
                   }`}
                 >
-                  {item}
-                  {activeSection === item.toLowerCase() && (
+                  {item.label}
+                  {activeSection === item.id && (
                     <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-white shadow-sm shadow-white/50"></div>
                   )}
                 </button>
@@ -269,13 +307,13 @@ export default function Portfolio() {
           {/* Mobile Navigation */}
           {isMenuOpen && (
             <div className="md:hidden py-4 border-t border-gray-700/30">
-              {["Home", "About", "Experience", "Projects", "Skills", "Contact"].map((item) => (
+              {navItems.map((item) => (
                 <button
-                  key={item}
-                  onClick={() => scrollToSection(item.toLowerCase())}
+                  key={item.label}
+                  onClick={() => scrollToSection(item.id)}
                   className="block w-full text-left py-2 text-sm font-medium font-code text-gray-400 hover:text-white uppercase tracking-wide"
                 >
-                  {item}
+                  {item.label}
                 </button>
               ))}
             </div>
@@ -509,6 +547,37 @@ export default function Portfolio() {
           </div>
         </div>
       </section>
+      {/* Certifications Section */}
+      <section id="certifications" className="py-20 relative">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-section-title font-display text-white mb-16 text-tech-glow tracking-wide">
+            CERTIFICATIONS
+          </h2>
+          <div className="overflow-x-auto whitespace-nowrap py-4">
+            <div className="flex gap-8 animate-marquee">
+              {certifications.map((cert, idx) => (
+                <a
+                  key={idx}
+                  href={cert.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block bg-gray-900/30 border border-gray-700/50 rounded-lg p-4 min-w-[220px] max-w-xs hover:border-gray-600/70 transition-all duration-300 align-top"
+                  style={{ verticalAlign: "top" }}
+                >
+                  <img
+                    src={cert.image}
+                    alt={cert.title}
+                    className="w-[120px] h-[120px] object-cover mx-auto mb-4 rounded"
+                  />
+                  <div className="text-center text-white font-tech break-words whitespace-normal text-sm font-semibold leading-tight">
+                    {cert.title}
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Contact Section */}
       <section id="contact" className="py-20 relative">
@@ -595,6 +664,8 @@ export default function Portfolio() {
           onClose={() => setSelectedProject(null)}
         />
       )}
+
+      
     </div>
   )
 }
